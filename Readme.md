@@ -31,6 +31,9 @@ GitHub Actions will compile the code for you. You don't need Linux or Docker.
 2. Connect to your router (usually IP `192.168.8.1`, username `root`, password is the one you set for the web admin panel).
 3. Copy the downloaded `.apk` file into the `/tmp/` folder on the router.
 
+> **⚠️ WARNING: Backup Recommended!**
+> Before proceeding with the installation, it is strongly recommended to backup all your settings and create a "freeze" state of your firmware. You can use this dedicated tool for a full backup and restore on Windows: [OpenWrt Firmware Backup/Restore (Latest Release)](https://github.com/Gegaremant/OpenWrt_firmvare_backupRestore_win/releases/latest)
+
 ### Step 3: Install the package
 1. Connect to your router via SSH (using PuTTY or the terminal `ssh root@192.168.8.1`).
 2. Run the installation command:
@@ -92,6 +95,9 @@ GitHub Actions will compile the code for you. You don't need Linux or Docker.
 1. Скачайте программу WinSCP (для Windows) или используйте встроенную команду `scp` в Linux/Mac.
 2. Подключитесь к роутеру (обычно IP `192.168.8.1`, логин `root`, пароль от вашей админки).
 3. Переместите файл `.apk` в папку `/tmp/` на вашем роутере.
+
+> **⚠️ ВНИМАНИЕ: Настоятельно рекомендуется сделать бэкап!**
+> Перед проведением установки настоятельно рекомендуется сохранить все настройки и сделать "заморозку" состояния прошивки, чтобы в случае чего можно было легко откатиться назад. Для полного резервного копирования и восстановления воспользуйтесь этой утилитой для Windows: [OpenWrt Firmware Backup/Restore (Скачать последний релиз)](https://github.com/Gegaremant/OpenWrt_firmvare_backupRestore_win/releases/latest)
 
 ### Шаг 3: Установка пакета в OpenWrt
 1. Подключитесь к роутеру по SSH (например, через программу PuTTY или терминал Windows командой `ssh root@192.168.8.1`).
