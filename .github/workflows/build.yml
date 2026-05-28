@@ -45,9 +45,10 @@ jobs:
           make defconfig
           make package/gl-e750-mcu/clean V=s
           make package/gl-e750-mcu/compile V=s
+          find bin/ -name "gl-e750-mcu_*.apk" -exec mv {} bin/gl-e750-MCU_display_for_OWRT_25_12.apk \;
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: gl-e750-mcu-ipk
-          path: openwrt-sdk/bin/**/*.apk
+          name: gl-e750-MCU_display_for_OWRT_25_12
+          path: openwrt-sdk/bin/gl-e750-MCU_display_for_OWRT_25_12.apk

@@ -121,13 +121,21 @@ If you want to check the MCU firmware version, please following these steps.
 6. In the first terminal, you will see the **e750-mcu recived:xxx** message
 
 ### Compile .ipk
+### Compile the installation package (.ipk or .apk format)
 
-#### 1. Compile using GitHub Actions (Recommended for Windows)
-Since you are on a Windows machine without WSL or Docker, the easiest way to compile the package for OpenWrt 25.12.4 is to use GitHub Actions.
-1. Create a repository on your GitHub account and push these files to it.
-2. We have already included a GitHub Actions workflow in `.github/workflows/build.yml`.
-3. Go to the "Actions" tab in your GitHub repository to see the build progress.
-4. Once the build is finished, download the `gl-e750-mcu-ipk` artifact which contains your compiled package for OpenWrt 25.12.4 (Note: OpenWrt 25.12 uses `.apk` packages).
+**Why is this needed?**
+To make the program run on your router, the source code (written in C) needs to be compiled (translated into machine code) by a specific compiler that understands your router's processor architecture. Setting up this environment manually is complicated, so we use the pre-built "OpenWrt SDK" — a toolset provided by OpenWrt developers. The result is an installation package that can be easily transferred to the router and installed with a single command.
+
+> **Important: What is an .apk in OpenWrt?**
+> Starting with version 25.12, OpenWrt transitioned from `.ipk` (opkg) package formats to `.apk` (Alpine Package Keeper). **These are NOT Android applications!** The file extension happens to be identical to Android smartphone installers, but internally they are completely different. An OpenWrt `.apk` file is strictly for Linux systems and routers.
+
+#### 1. Automatic Compilation via GitHub Actions (Recommended)
+This is the easiest method: you don't need Linux, WSL, or Docker. GitHub's free servers will do all the heavy lifting.
+
+1. **Start the build:** Go to the **Actions** tab in your GitHub repository, select "Build OpenWrt MCU Package" and click **Run workflow**. (Or the build will trigger automatically when you make changes to the code).
+2. **Wait:** The GitHub server will download the OpenWrt SDK, insert our code, and compile it. This takes about 2-3 minutes.
+3. **Download the ready package:** When the build finishes successfully (a green checkmark appears), open it and download the archive from the **Artifacts** section at the bottom. Inside, you will find the ready `gl-e750-MCU_display_for_OWRT_25_12.apk` file.
+4. Transfer this file to your router (e.g., via SCP or WinSCP) and install it with the command: `apk add /path/to/gl-e750-MCU_display_for_OWRT_25_12.apk`
 
 #### 2. Compile on the glinet openwrt source (Linux)
 	$cd openwrt_root          #go to your openwrt source root
@@ -283,14 +291,21 @@ echo '{ "ssid_5g": "GL-E750-719", "up_5g": "1", "key_5g": "goodlife", "ssid": "G
 
 6. В первом терминале вы увидите сообщение вида **e750-mcu recived:xxx**.
 
-### Компиляция .ipk/.apk пакета
+### Компиляция пакета для установки (формат .ipk или .apk)
 
-#### 1. Компиляция через GitHub Actions (Рекомендуется для Windows)
-Так как вы находитесь на операционной системе Windows без установленных WSL или Docker, самый простой способ собрать пакет для OpenWrt 25.12.4 — использовать GitHub Actions.
-1. Создайте репозиторий в вашем GitHub-аккаунте и загрузите туда эти файлы (git push).
-2. Мы уже включили готовый рабочий процесс (workflow) для GitHub Actions в файл `.github/workflows/build.yml`.
-3. Перейдите на вкладку "Actions" в вашем репозитории на GitHub, чтобы наблюдать за процессом сборки.
-4. После завершения сборки скачайте артефакт `gl-e750-mcu-ipk`, который содержит скомпилированный пакет для OpenWrt 25.12.4 (Внимание: OpenWrt 25.12 использует пакеты формата `.apk`).
+**Зачем это нужно?**
+Чтобы программа заработала на вашем роутере, исходный код (написанный на языке Си) нужно скомпилировать (перевести в машинный код) специальным компилятором, который понимает архитектуру процессора вашего роутера. Так как настроить такую среду на обычном компьютере сложно, мы используем готовый "OpenWrt SDK" — набор инструментов от разработчиков OpenWrt. В результате мы получаем установочный пакет, который можно легко закинуть на роутер и установить одной командой.
+
+> **Важно: Что такое .apk в OpenWrt?**
+> Начиная с версии OpenWrt 25.12, система перешла с формата пакетов `.ipk` (opkg) на `.apk` (Alpine Package Keeper). **Это НЕ Android-приложения!** Формат файлов случайно совпадает с установочными файлами для смартфонов Android, но внутри это совершенно разные вещи. Файл `.apk` от OpenWrt предназначен исключительно для Linux-систем и роутеров.
+
+#### 1. Автоматическая компиляция через GitHub Actions (Рекомендуется)
+Это самый простой способ: вам не нужен Linux, WSL или Docker. Всю тяжелую работу по сборке сделают бесплатные серверы GitHub.
+
+1. **Запустите сборку:** Перейдите на вкладку **Actions** в вашем репозитории на GitHub, выберите "Build OpenWrt MCU Package" и нажмите **Run workflow**. (Либо сборка запустится автоматически при внесении изменений в код).
+2. **Подождите:** Сервер GitHub скачает OpenWrt SDK, поместит туда наш код и скомпилирует его. Это занимает около 2-3 минут.
+3. **Скачайте готовый пакет:** Когда сборка успешно завершится (загорится зеленая галочка), откройте её и в самом низу в разделе **Artifacts** скачайте архив. Внутри архива вы найдете готовый файл `gl-e750-MCU_display_for_OWRT_25_12.apk`.
+4. Перенесите этот файл на роутер (например, через SCP или WinSCP) и установите командой: `apk add /путь/к/файлу/gl-e750-MCU_display_for_OWRT_25_12.apk`
 
 #### 2. Компиляция на исходниках OpenWrt от GL.iNet (Для Linux)
 	$cd openwrt_root          # перейдите в корень исходников openwrt
