@@ -1,3 +1,7 @@
+/* 
+ * EN: Main application logic. Collects router status (WiFi, Modem, VPN, etc.) and communicates with the MCU over UART.
+ * RU: Основная логика приложения. Собирает статус роутера (WiFi, Модем, VPN и т.д.) и общается с микроконтроллером (MCU) по UART.
+ */
 #include <stdio.h>
 #include <unistd.h>
 #include <string.h>

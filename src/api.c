@@ -1,3 +1,7 @@
+/* 
+ * EN: This file implements API hooks and endpoints for retrieving and setting MCU configurations.
+ * RU: Этот файл реализует API хуки и конечные точки (эндпоинты) для получения и настройки конфигураций микроконтроллера (MCU).
+ */
 #include <stdio.h>
 #include <unistd.h>
 #include <string.h>

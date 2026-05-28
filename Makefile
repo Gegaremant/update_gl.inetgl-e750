@@ -1,3 +1,5 @@
+# EN: OpenWrt Makefile. Contains build instructions and package definitions for the OpenWrt build system.
+# RU: Makefile для OpenWrt. Содержит инструкции по сборке и определения пакета для системы сборки OpenWrt.
 
 #
 # Copyright (C) 2017 OpenWrt.org

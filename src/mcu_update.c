@@ -3,6 +3,9 @@
 	> Author:lincoln 
 	> Mail: 1720013893@qq.com
 	> Created Time: 2019年07月22日 星期一 10时38分19秒
+	
+	EN: This utility is responsible for flashing/upgrading the MCU firmware via UART.
+	RU: Эта утилита отвечает за прошивку/обновление программного обеспечения микроконтроллера (MCU) через UART.
  ************************************************************************/
 
 #include <stdint.h>
