@@ -31,8 +31,9 @@ jobs:
           wget -qO- https://downloads.openwrt.org/releases/25.12.4/targets/ath79/nand/sha256sums | grep "openwrt-sdk-25.12.4-ath79-nand" | awk '{print $2}' > sdk_filename.txt
           SDK_FILE=$(cat sdk_filename.txt | sed 's/^\*//')
           wget https://downloads.openwrt.org/releases/25.12.4/targets/ath79/nand/$SDK_FILE
-          tar xf $SDK_FILE
-          SDK_DIR=$(basename $SDK_FILE .tar.xz)
+          sudo apt-get update && sudo apt-get install -y zstd
+          tar -I zstd -xf $SDK_FILE
+          SDK_DIR=${SDK_FILE%.tar.*}
           mv $SDK_DIR openwrt-sdk
 
       - name: Build package
