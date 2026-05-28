@@ -29,7 +29,7 @@ jobs:
         if: steps.cache-sdk.outputs.cache-hit != 'true'
         run: |
           wget -qO- https://downloads.openwrt.org/releases/25.12.4/targets/ath79/nand/sha256sums | grep "openwrt-sdk-25.12.4-ath79-nand" | awk '{print $2}' > sdk_filename.txt
-          SDK_FILE=$(cat sdk_filename.txt | sed 's/*//')
+          SDK_FILE=$(cat sdk_filename.txt | sed 's/^\*//')
           wget https://downloads.openwrt.org/releases/25.12.4/targets/ath79/nand/$SDK_FILE
           tar xf $SDK_FILE
           SDK_DIR=$(basename $SDK_FILE .tar.xz)
@@ -49,4 +49,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: gl-e750-mcu-ipk
-          path: openwrt-sdk/bin/packages/mips_24kc/base/gl-e750-mcu_*.apk
+          path: openwrt-sdk/bin/**/*.apk
