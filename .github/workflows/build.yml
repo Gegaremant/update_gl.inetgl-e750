@@ -14,13 +14,13 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           path: package/gl-e750-mcu
 
       - name: Cache OpenWrt SDK
         id: cache-sdk
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: openwrt-sdk
           key: ${{ runner.os }}-openwrt-sdk-25.12.4-ath79-nand
@@ -46,7 +46,7 @@ jobs:
           make package/gl-e750-mcu/compile V=s
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: gl-e750-mcu-ipk
           path: openwrt-sdk/bin/**/*.apk
