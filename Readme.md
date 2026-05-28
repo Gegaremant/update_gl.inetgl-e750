@@ -116,7 +116,15 @@ If you want to check the MCU firmware version, please following these steps.
 6. In the first terminal, you will see the **e750-mcu recived:xxx** message
 
 ### Compile .ipk
-#### 1. Compile on the glinet openwrt source
+
+#### 1. Compile using GitHub Actions (Recommended for Windows)
+Since you are on a Windows machine without WSL or Docker, the easiest way to compile the package for OpenWrt 25.12.4 is to use GitHub Actions.
+1. Create a repository on your GitHub account and push these files to it.
+2. We have already included a GitHub Actions workflow in `.github/workflows/build.yml`.
+3. Go to the "Actions" tab in your GitHub repository to see the build progress.
+4. Once the build is finished, download the `gl-e750-mcu-ipk` artifact which contains your compiled package for OpenWrt 25.12.4 (Note: OpenWrt 25.12 uses `.apk` packages).
+
+#### 2. Compile on the glinet openwrt source (Linux)
 	$cd openwrt_root          #go to your openwrt source root
 	$./scripts/feeds update -f -a
 	$./scripts/feeds install -f -a
@@ -127,8 +135,8 @@ If you want to check the MCU firmware version, please following these steps.
 	$make package/feeds/gli_pub/gl-e750-mcu/{clean,compile} V=s
 	$ls bin/packages/mips_24kc/gli_pub/gl-e750-mcu_2020-06-08-f8c77bdb-1_mips_24kc.ipk
   
-#### 2. Compile on the other openwrt source
-	$cd openwrt_root          #go to your openwrt source root
+#### 3. Compile on the other openwrt source (Linux, e.g. OpenWrt 25.12)
+	$cd openwrt_root          #go to your openwrt source root (e.g. OpenWrt 25.12 SDK)
 	$cd package
 	$git clone https://github.com/gl-inet/GL-E750-MCU-instruction.git
 	$cd ..
@@ -136,7 +144,7 @@ If you want to check the MCU firmware version, please following these steps.
 	  gl-inet  ---> 
 	    <*> gl-e750-mcu........................................ GL iNet mcu interface
 	$make package/GL-E750-MCU-instruction/{clean,compile} V=s
-	$ls bin/packages/mips_24kc/base/gl-e750-mcu_2020-06-08-f8c77bdb-1_mips_24kc.ipk
+	$ls bin/packages/mips_24kc/base/gl-e750-mcu_*-1_mips_24kc.apk
 
 ### How to upgrade the mcu firmware
 1. Get the mcu firmware from GL sales or compile the firmware by youself use the source code

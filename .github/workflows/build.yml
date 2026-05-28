@@ -1,0 +1,52 @@
+name: Build OpenWrt Package
+
+on:
+  push:
+    branches: [ master, main ]
+  pull_request:
+    branches: [ master, main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build gl-e750-mcu for OpenWrt 25.12.4
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          path: package/gl-e750-mcu
+
+      - name: Cache OpenWrt SDK
+        id: cache-sdk
+        uses: actions/cache@v3
+        with:
+          path: openwrt-sdk
+          key: ${{ runner.os }}-openwrt-sdk-25.12.4-ath79-nand
+
+      - name: Download and extract OpenWrt SDK
+        if: steps.cache-sdk.outputs.cache-hit != 'true'
+        run: |
+          wget -qO- https://downloads.openwrt.org/releases/25.12.4/targets/ath79/nand/sha256sums | grep "openwrt-sdk-25.12.4-ath79-nand" | awk '{print $2}' > sdk_filename.txt
+          SDK_FILE=$(cat sdk_filename.txt | sed 's/*//')
+          wget https://downloads.openwrt.org/releases/25.12.4/targets/ath79/nand/$SDK_FILE
+          tar xf $SDK_FILE
+          SDK_DIR=$(basename $SDK_FILE .tar.xz)
+          mv $SDK_DIR openwrt-sdk
+
+      - name: Build package
+        run: |
+          cp -r package/gl-e750-mcu openwrt-sdk/package/
+          cd openwrt-sdk
+          ./scripts/feeds update -a
+          ./scripts/feeds install -a
+          make defconfig
+          make package/gl-e750-mcu/clean V=s
+          make package/gl-e750-mcu/compile V=s
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: gl-e750-mcu-ipk
+          path: openwrt-sdk/bin/packages/mips_24kc/base/gl-e750-mcu_*.apk
