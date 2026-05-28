@@ -38,6 +38,7 @@ jobs:
 
       - name: Build package
         run: |
+          rm -rf openwrt-sdk/package/gl-e750-mcu
           cp -r package/gl-e750-mcu openwrt-sdk/package/
           cd openwrt-sdk
           ./scripts/feeds update -a
